@@ -1,0 +1,7 @@
+{
+  "permissions": {"deny": ["Read(**/.env)", "Read(**/.env.*)", "Read(**/*.pem)", "Read(**/*.key)", "Bash(git push *)"]},
+  "hooks": {
+    "PreToolUse": [{"matcher": "Bash|Read|Edit|Write", "hooks": [{"type": "command", "command": "python3", "args": ["${CLAUDE_PROJECT_DIR}/.claude/hooks/bot_guard.py"], "timeout": 10, "onFailure": "block"}]}],
+    "PostToolUse": [{"matcher": "Edit|Write", "hooks": [{"type": "command", "command": "${CLAUDE_PROJECT_DIR}/.venv/bin/python", "args": ["${CLAUDE_PROJECT_DIR}/.claude/hooks/limits_tests.py"], "timeout": 120}]}]
+  }
+}
